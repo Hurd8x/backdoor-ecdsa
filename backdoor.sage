@@ -4,12 +4,9 @@
 #
 # DO NOT USE - experimental quality software
 #
-# one-time setup:
-#    $ /path/to/sage
-#    %pip install pycrypto
 
 from sage.misc.prandom import randint
-from Crypto.Hash import HMAC, SHA256
+import hmac
 import itertools
 
 # secp256k1 curve parameters
@@ -58,7 +55,7 @@ def deser(bs):
   return int.from_bytes(bs, 'little')
 
 def mix(s, m):
-  h = HMAC.new(ser(s), digestmod=SHA256)
+  h = hmac.new(ser(s), digestmod='SHA256')
   h.update(ser(int(m)))
   return deser(h.digest())
 
